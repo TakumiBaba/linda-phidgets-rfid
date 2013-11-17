@@ -1,16 +1,30 @@
 #!/usr/bin/env ruby
 Bundler.require
 
+rfid = Phidgets::RFID.new
+rfid.on_attach do |device, obj|
+  puts "#{device.device_class} attached"
+  device.antenna = true
+  device.led = true
+  sleep 1
+end
+
+tagids = {
+  "01068e2978" => "milk",
+  "01068e2533" => "deka basami",
+  "01068e2c90" => "spoon",
+  "01068e065a" => "mini clip"
+}
+
 EM::run do
-  rfid = Phidgets::RFID.new
+  
   linda = EM::RocketIO::Linda::Client.new "http://linda.masuilab.org"
   ts = linda.tuplespace["delta"]
   linda.io.on "connect" do
+    puts "connect"
     rfid.on_tag do |device, id, obj|
-      ts.write ["rfid", "on", id]
-    end
-    rfid.on_tag_lost do |device, id, obj|
-      ts.write ["rfid", "off", id]
+      puts "on"
+      ts.write ["rfid", "on", tagids[id]]
     end
   end
 end
