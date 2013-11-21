@@ -19,7 +19,7 @@ tagids = {
 EM::run do
   
   linda = EM::RocketIO::Linda::Client.new "http://linda.masuilab.org"
-  ts = linda.tuplespace["delta"]
+  ts = linda.tuplespace["orf"]
   linda.io.on "connect" do
     puts "connect"
     rfid.on_tag do |device, id, obj|
