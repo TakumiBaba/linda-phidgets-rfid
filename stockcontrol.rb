@@ -34,14 +34,19 @@ EM::run do
         end
       end
     end
-    # sleep 10
     ts.watch ["rfid", "on"] do |tuple|
-      _ts.list [], do |tuples|
+      _ts.list [] do |tuples|
         flag = false
         for t in tuples
-          if t[2] == tuple[2]
+          puts t
+          puts "t[2] is #{t[2]}, tuple[2] is #{tuple[2]}"
+          puts t[0].class, tuple[2].class
+          if t[0] == tuple[2]
+            puts "FLAG!!"
             flag = true
           end
+        end
+        puts "flag is #{flag}"
         if !flag
           _ts.write [tuple[2]]
         end
@@ -49,17 +54,34 @@ EM::run do
     end
 
     ts.watch ["press", "off"] do |tuple|
-      puts "press"
-      _ts.read ["mikan"] do |tuple|
-        if tuple[1] != 0
-          _ts.write ["mikan", 0]
+      _ts.list [] do |tuples|
+        flag = false
+        for t in tuples
+          puts t[0]
+          if t[0] == "mikan"
+            puts "flag"
+            flag = true
+          end
+        end
+        if !flag
+          _ts.write ["mikan"]
+        end
       end
-      # _ts.write ["mikan"]
     end
 
     ts.watch ["switch", "off"] do |tuple|
       puts "switch"
-      _ts.write ["beer"]
+      _ts.list [] do |tuples|
+        flag = false
+        for t in tuples
+          if t[0] == "beer"
+            flag = true
+          end
+        end
+        if !flag
+          _ts.write ["beer"]
+        end
+      end
     end
 
     ts.watch ["list"] do |tuple|

@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
-Bundler.require
+
+require "rubygems"
+require "eventmachine"
+require "em-rocketio-linda-client"
 
 rfid = Phidgets::RFID.new
 rfid.on_attach do |device, obj|
