@@ -29,18 +29,32 @@ EM::run do
           # puts "take"
           # _ts.write [items[i], 10]
           # i = i+1
-          # puts "write"          
+          # puts "write"
           # puts tuple
         end
       end
     end
     # sleep 10
     ts.watch ["rfid", "on"] do |tuple|
-      _ts.write [tuple[2]]
+      _ts.list [], do |tuples|
+        flag = false
+        for t in tuples
+          if t[2] == tuple[2]
+            flag = true
+          end
+        if !flag
+          _ts.write [tuple[2]]
+        end
+      end
     end
+
     ts.watch ["press", "off"] do |tuple|
       puts "press"
-      _ts.write ["mikan"]
+      _ts.read ["mikan"] do |tuple|
+        if tuple[1] != 0
+          _ts.write ["mikan", 0]
+      end
+      # _ts.write ["mikan"]
     end
 
     ts.watch ["switch", "off"] do |tuple|

@@ -7,7 +7,7 @@ ifkit.on_attach do |device, obj|
   sleep 1
 end
 
-sleep 5
+sleep 1
 
 EM::run do
   linda = EM::RocketIO::Linda::Client.new "http://linda.masuilab.org"
