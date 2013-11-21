@@ -22,18 +22,18 @@ EM::run do
 
   linda.io.on "connect" do
     puts "connect"
-    _ts.list [] do |results|
-      i = 0
-      for r in results
-        _ts.take [] do |tuple|
-          # puts "take"
-          # _ts.write [items[i], 10]
-          # i = i+1
-          # puts "write"
-          # puts tuple
-        end
-      end
-    end
+    # _ts.list [] do |results|
+    #   i = 0
+    #   for r in results
+    #     _ts.take [] do |tuple|
+    #       puts "take"
+    #       _ts.write [items[i], 10]
+    #       i = i+1
+    #       puts "write"
+    #       puts tuple
+    #     end
+    #   end
+    # end
     ts.watch ["rfid", "on"] do |tuple|
       _ts.list [] do |tuples|
         flag = false
