@@ -22,31 +22,14 @@ EM::run do
 
   linda.io.on "connect" do
     puts "connect"
-    # _ts.list [] do |results|
-    #   i = 0
-    #   for r in results
-    #     _ts.take [] do |tuple|
-    #       puts "take"
-    #       _ts.write [items[i], 10]
-    #       i = i+1
-    #       puts "write"
-    #       puts tuple
-    #     end
-    #   end
-    # end
     ts.watch ["rfid", "on"] do |tuple|
       _ts.list [] do |tuples|
         flag = false
         for t in tuples
-          puts t
-          puts "t[2] is #{t[2]}, tuple[2] is #{tuple[2]}"
-          puts t[0].class, tuple[2].class
           if t[0] == tuple[2]
-            puts "FLAG!!"
             flag = true
           end
         end
-        puts "flag is #{flag}"
         if !flag
           _ts.write [tuple[2]]
         end
@@ -57,9 +40,7 @@ EM::run do
       _ts.list [] do |tuples|
         flag = false
         for t in tuples
-          puts t[0]
           if t[0] == "mikan"
-            puts "flag"
             flag = true
           end
         end
