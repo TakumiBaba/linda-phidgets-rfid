@@ -21,7 +21,7 @@ tagids = {
 
 EM::run do
   
-  linda = EM::RocketIO::Linda::Client.new "http://linda.masuilab.org"
+  linda = EM::RocketIO::Linda::Client.new "http://linda.shokai.org"
   ts = linda.tuplespace["orf"]
   linda.io.on "connect" do
     puts "connect"

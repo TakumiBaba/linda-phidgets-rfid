@@ -14,7 +14,7 @@ tagids = {
 items = ["milk", "hasami", "spoon", "clip", "mikan", "beer"]
 
 EM::run do
-  url = "http://linda.masuilab.org"
+  url = "http://linda.shokai.org"
   space = "orf"
   linda = EM::RocketIO::Linda::Client.new url
   ts = linda.tuplespace[space]
